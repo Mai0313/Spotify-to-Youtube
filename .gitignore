@@ -1,0 +1,6 @@
+log/*
+playlist/*
+processed_song/*
+Untitled-1.ipynb
+utils/__pycache__/*
+/*.json

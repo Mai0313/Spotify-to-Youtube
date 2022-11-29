@@ -34,7 +34,7 @@ Please make sure to update tests as appropriate.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Author
-[**@Mai0313**]
+[**@Mai0313**] (https://mai0313.com/, "Mai0313") (https://github.com/Mai0313/Spotify-to-Youtube)
 
 ## Dictory tree
 ```

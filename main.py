@@ -1,5 +1,11 @@
 from utils.data import *
 
+if not os.path.exists('log'):
+    os.makedirs('log')
+if not os.path.exists('playlist'):
+    os.makedirs('playlist')
+if not os.path.exists('processed_song'):
+    os.makedirs('processed_song')
 
 for i in range(len(filename)):
     playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', '_debug'), 'created by python script')

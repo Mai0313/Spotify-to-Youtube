@@ -6,6 +6,21 @@ This is a simple script that allows you to download a song from Spotify and conv
 
 ```
 
+## How to use
+```
+- Open https://watsonbox.github.io/exportify/
+- Export your playlist in csv (choose whatever you like to export)
+- Put those csv inside the data folder
+    -Just put it in, it will automatically get all .csv file
+- Check https://ytmusicapi.readthedocs.io/en/stable/ to add your cookie info into file name 'headers_auth.json'
+- Start main.py, everything will be done soon.
+    - Note: The playlist it creates on YouTube Music will be brand new and named as your *.csv name
+    - For example, if your csv file is named 'Hello World.csv', the playlist on YouTube Music it creates will be named as 'Hello World'
+    
+I will make it easiler once I have time
+You can use this with some time clock to let it sync automatically
+```
+
 ## Installation
 
 ```

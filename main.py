@@ -2,7 +2,6 @@ import pandas as pd
 from ytmusicapi import YTMusic
 import time
 from tqdm import tqdm
-import multiprocessing as mp
 import os
 from utils.folder_create import create_folder
 

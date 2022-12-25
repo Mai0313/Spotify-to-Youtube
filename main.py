@@ -1,7 +1,6 @@
 import pandas as pd
 from ytmusicapi import YTMusic
 import time
-from tqdm import tqdm
 import os
 from utils.folder_create import create_folder
 
@@ -20,7 +19,6 @@ def import_playlist(filename):
     data = (pd.read_csv(f'playlist/{filename}'))[['Track Name', 'Artist Name(s)']].values.tolist()
     playlist_id = ytmusic.create_playlist(filename.replace('.csv', ''), 'created by python script')
     print(filename.replace('.csv', '') + ' has been created')
-    progress = tqdm(data, desc='Adding songs to playlist')
     for i in range(len(data)):
         music_name = data[i][0]
         artist_name = data[i][1]
@@ -31,7 +29,6 @@ def import_playlist(filename):
             print(music_name, 'by', artist_name, 'has been added successfully')
         except:
             print(music_name, 'by', artist_name, 'has not been added successfully')
-        progress.update(1)
 def main():
     filename = [f for f in os.listdir('playlist') if f.endswith('.csv')]
     for i in range(len(filename)):

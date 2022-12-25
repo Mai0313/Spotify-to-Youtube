@@ -18,8 +18,8 @@ except FileNotFoundError:
 
 def import_playlist(filename):
     data = (pd.read_csv(f'playlist/{filename}'))[['Track Name', 'Artist Name(s)']].values.tolist()
-    playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', ''), 'created by python script')
-    print(filename[i].replace('.csv', '') + ' has been created')
+    playlist_id = ytmusic.create_playlist(filename.replace('.csv', ''), 'created by python script')
+    print(filename.replace('.csv', '') + ' has been created')
     progress = tqdm(data, desc='Adding songs to playlist')
     for i in range(len(data)):
         music_name = data[i][0]

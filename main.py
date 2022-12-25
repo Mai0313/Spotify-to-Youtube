@@ -1,14 +1,9 @@
 from utils.data import *
 
-if not os.path.exists('log'):
-    os.makedirs('log')
-if not os.path.exists('playlist'):
-    os.makedirs('playlist')
-if not os.path.exists('processed_song'):
-    os.makedirs('processed_song')
+create_folder()
 
 for i in range(len(filename)):
-    playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', '_debug'), 'created by python script')
+    playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', ''), 'created by python script')
     print(filename[i].replace('.csv', '') + ' has been created')
     data = (((lambda x: pd.read_csv(os.path.join(path, filename[i])))(filename[i]))[['Track Name', 'Artist Name(s)']]).values.tolist()
     songlist = f'processed_song/{filename[i].replace(".csv", "")}_list.txt'

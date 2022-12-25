@@ -1,6 +1,7 @@
 # Spotify to Youtube 
 
 ### This is a simple script that allows you to transger your playist from Spotify to Youtube Music.
+#### Feel Free to do pl if you have any good idea, plz follow basic commit rules.
 
 ## How to use
 

@@ -28,3 +28,11 @@ def readtxt(filename):
 def hashmap(data):
     hashdata = hashlib.md5((data[['Track Name', 'Artist Name(s)']].to_string().encode('utf-8'))).hexdigest()
     return hashdata
+
+def create_folder():
+    if not os.path.exists('log'):
+        os.makedirs('log')
+    if not os.path.exists('playlist'):
+        os.makedirs('playlist')
+    if not os.path.exists('processed_song'):
+        os.makedirs('processed_song')

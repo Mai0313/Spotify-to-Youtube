@@ -1,39 +1,42 @@
-from utils.data import *
+import pandas as pd
+from ytmusicapi import YTMusic
+import time
+from tqdm import tqdm
+import multiprocessing as mp
+import os
+from utils.folder_create import create_folder
 
 create_folder()
+try:
+    ytmusic = YTMusic('headers_auth.json')
+except FileNotFoundError:
+    print('headers_auth.json file not found..., please check README.md file to get more info')
 
-for i in range(len(filename)):
-    playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', ''), 'created by python script')
-    print(filename[i].replace('.csv', '') + ' has been created')
-    data = (((lambda x: pd.read_csv(os.path.join(path, filename[i])))(filename[i]))[['Track Name', 'Artist Name(s)']]).values.tolist()
-    songlist = f'processed_song/{filename[i].replace(".csv", "")}_list.txt'
-    processed = readtxt(songlist)
-    for j in range(len(data)):
-        if data[j][0] in processed:
-            print(f'{data[j][0]} has been processed')
-            continue
-        else:
-            search_results = ytmusic.search(data[j][0] + ' ' + data[j][1], filter='songs')
+try:
+    filename = [f for f in os.listdir('playlist') if f.endswith('.csv')]
+except FileNotFoundError:
+    print('playlist csv file not found..., please check README.md file to get more info')
+
+def import_playlist(filename):
+    data = (pd.read_csv(f'playlist/{filename}'))[['Track Name', 'Artist Name(s)']].values.tolist()
+    # playlist_id = ytmusic.create_playlist(filename[i].replace('.csv', ''), 'created by python script')
+    # print(filename[i].replace('.csv', '') + ' has been created')
+    progress = tqdm(data, desc='Adding songs to playlist')
+    for i in range(len(data)):
+        music_name = data[i][0]
+        artist_name = data[i][1]
+        try:
+            search_results = ytmusic.search(music_name + ' ' + artist_name, filter='songs')
             video_id = search_results[0]['videoId']
-            if video_id is not None:
-                ytmusic.add_playlist_items(playlist_id, [video_id])
-                with open(songlist, 'a+', encoding = 'utf8') as f:
-                    f.write(data[j][0] + '\n')
-                print(data[j][0] + ' by ' + data[j][1] + ' added')
-            elif video_id is None:
-                video_id = search_results[1]['videoId']
-                ytmusic.add_playlist_items(playlist_id, [video_id])
-                with open(songlist, 'a+', encoding = 'utf8') as f:
-                    f.write(data[j][0] + '\n')
-                print(data[j][0] + ' by ' + data[j][1] + ' added')
-            elif video_id is None:
-                video_id = search_results[2]['videoId']
-                ytmusic.add_playlist_items(playlist_id, [video_id])
-                with open(songlist, 'a+', encoding = 'utf8') as f:
-                    f.write(data[j][0] + '\n')
-                print(data[j][0] + ' by ' + data[j][1] + ' added')
-            else:
-                print(data[j][0] + ' by ' + data[j][1] + ' not found')
-                with open(f'log/not_found_log.txt', 'a', encoding = 'utf8') as f:
-                    f.write(str(data[j][0]) + ' ' + str(data[j][1]) + ' not found' + '\n')
-print(filename[i] + ' has been added to youtube music')
+        # ytmusic.add_playlist_items(playlist_id, [video_id])
+        # print(music_name, 'by', artist_name, 'has been added successfully')
+        except:
+            print(music_name, 'by', artist_name, 'has not been added successfully')
+        progress.update(1)
+def main():
+    filename = [f for f in os.listdir('playlist') if f.endswith('.csv')]
+    for i in range(len(filename)):
+        import_playlist(filename[i])
+        print(filename[i] + ' has been added to youtube music successfully')
+if __name__ == '__main__':
+    main()
